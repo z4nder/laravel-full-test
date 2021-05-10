@@ -1,0 +1,21 @@
+GET https://api.quotable.io/random
+Accept: application/json
+
+<> 2020-10-05T083451.200.json
+
+###
+
+GET https://api.quotable.io/random
+Accept: application/json
+
+<> 2020-10-05T011219.200.json
+
+###
+
+GET https://api.quotable.io/random
+Accept: application/json
+
+<> 2020-10-05T125249.200.json
+
+###
+

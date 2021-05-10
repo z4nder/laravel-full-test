@@ -1,0 +1,4 @@
+GET https://api.quotable.io/random
+Accept: application/json
+
+###
