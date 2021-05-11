@@ -5,16 +5,24 @@ namespace App\Http\Controllers;
 use App\Http\Requests\DailyLogStoreRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use App\Events\DailyLogCreated;
 
 use \App\Models\DailyLog;
 
 class DailyLogController extends Controller
 {
+    function __construct()
+    {
+      $this->middleware('user.block.name', ['only' => ['store']]);
+    }
+
    public function store(DailyLogStoreRequest $request)
     {
       $input = $request->validated();
     
-      $request->user()->dailyLogs()->create($input);
+      $dailyLog = $request->user()->dailyLogs()->create($input);
+
+      event(new DailyLogCreated($dailyLog));
 
       return back();
     }

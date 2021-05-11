@@ -16,6 +16,8 @@ class BlockUserWithName
      */
     public function handle(Request $request, Closure $next)
     {
-      dd($request->user->name);
+      if($request->user()->name === "Jane Doe") abort(401);
+      
+      return $next($request);
     }
 }
