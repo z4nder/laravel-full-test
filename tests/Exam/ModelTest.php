@@ -86,7 +86,7 @@ class ModelTest extends TestCase
             'day'     => now(),
             'user_id' => $user->id,
         ]);
-
+          
         $todaysLog = $user->dailyLogs()->fromToday()->get();
 
         $this->assertCount(3, $todaysLog);

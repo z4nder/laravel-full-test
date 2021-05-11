@@ -15,6 +15,9 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Sanctum\PersonalAccessToken;
+use Illuminate\Support\Facades\Hash;
+
+use App\Models\DailyLog;
 
 /**
  * App\Models\User
@@ -58,28 +61,52 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, HasProfilePhoto, Notifiable, TwoFactorAuthenticatable;
 
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+      'name',
+      'email',
+      'password',
     ];
 
     protected $hidden = [
-        'password',
-        'remember_token',
-        'two_factor_recovery_codes',
-        'two_factor_secret',
+      'password',
+      'remember_token',
+      'two_factor_recovery_codes',
+      'two_factor_secret',
     ];
 
     protected $casts = [
-        'email_verified_at' => 'datetime',
+      'email_verified_at' => 'datetime',
     ];
 
     protected $appends = [
-        'profile_photo_url',
+      'profile_photo_url',
     ];
 
     protected function defaultProfilePhotoUrl()
     {
         return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&color=FFB133&background=FDF3B6';
+    }
+
+  /**
+    * Get all of the Daily Logs of user.
+  */
+  public function dailyLogs()
+  {
+    return $this->HasMany(DailyLog::class, 'user_id');
+  }
+
+   /**
+     * UpperCase Name Letter
+     */
+    public function getNameAttribute(String $value) : String
+    {
+        return ucwords($value);
+    }
+
+    /**
+     * Set the password to Hashed Password
+    */
+    public function setPasswordAttribute(String $value) : void
+    {
+      $this->attributes['password'] = Hash::make($value);
     }
 }

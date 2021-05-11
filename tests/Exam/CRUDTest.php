@@ -83,7 +83,9 @@ class CRUDTest extends TestCase
     public function implement_route_model_binding()
     {
         $user     = \App\Models\User::factory()->create();
-        $dailyLog = \App\Models\DailyLog::factory()->create();
+        # ERROR
+        // $dailyLog = \App\Models\DailyLog::factory()->create();
+        $dailyLog = \App\Models\DailyLog::factory()->create(['user_id' => $user->id]);
 
         $this->actingAs($user);
 
