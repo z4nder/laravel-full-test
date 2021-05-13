@@ -7,12 +7,13 @@ use Illuminate\Support\Facades\Hash;
 use \Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\User;
 
 class DailyLog extends Model
 {
-  use HasFactory;
+  use HasFactory, SoftDeletes;
 
   protected $fillable = [
     'log',
@@ -37,6 +38,6 @@ class DailyLog extends Model
   */
   public function scopeFromToday(Builder $query) : Builder
   {
-    return $query->whereDate('day', Carbon::today());
+    return $query->whereDate('day','>=', Carbon::today());
   }
 }

@@ -28,7 +28,7 @@ class DailyLogController extends Controller
       $input = $request->validated();
 
       $dailyLog = $request->user()->dailyLogs()->create($input);
-
+        dd("OK");
       event(new DailyLogCreated($dailyLog));
 
       return back();
